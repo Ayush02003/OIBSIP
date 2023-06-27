@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            color: rgb(72, 70, 70);    
+            /* background: transparent; */
+        }
+
+        .temp {
+            padding: 3px 10px;
+            /* border: none; */
+            /* border-bottom: 1px solid black; */
+            outline: none;
+            width: 200px;
+        }
+        input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{
+            -webkit-appearance: none;
+        }
+        #temp1{
+            margin-bottom: 20px;
+        }
+        body{
+            background-color: lightblue;
+            /* background-image:linear-gradient(to right, rgb(255, 111, 111),rgb(244, 86, 86),rgb(150, 150, 247),rgb(82, 82, 239)) ; */
+        }
+        .container{
+            border-radius: 30px;
+            margin: auto;
+            margin-top: 120px;
+            width: 45%;
+            /* border: 2px solid #78787f; */
+            box-shadow: 0px 0px 60px rgb(168, 161, 161);
+            background-color: aliceblue;
+            display: flex;
+            /* background-image: linear-gradient(to left,rgb(167, 167, 236),rgb(196, 196, 247),rgb(241, 140, 140),rgb(247, 146, 146) ); */
+        }
+        .inner-container {
+            box-sizing: border-box;
+            width: 50%;
+            padding: 40px 30px 50px 50px;
+            position: relative;
+            /* background-image: linear-gradient(to left, rgb(241, 140, 140),rgb(247, 146, 146)); */
+        }
+        .disp-contain{
+            /* background-image: linear-gradient(to left,rgb(167, 167, 236),rgb(196, 196, 247)); */
+            /* text-align: center; */
+            padding-top: 120px;
+            width: 50%;
+            position: relative;
+            /* border-left: 2px solid #78787f; */
+        }
+        select {
+            outline: none;
+        }
+        .title{
+            margin-bottom: 25px;
+            font-size: 25px;
+        }
+        .text{
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+        #sel{
+            position: absolute;
+            left: 233px;
+            top: 124px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            border-left:1px solid black ;
+        }
+        #con{
+            padding: 3px 10px;
+            width: 224px;
+        }
+        #convert_btn{
+            margin: 30px 0px 0px 0px;
+            padding: 5px 20px;
+            width: 224px;
+            background-color: #808087;
+            color: white;
+            border: none;
+            padding: 10px 0px;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+        #convert_btn:hover{
+            cursor: pointer;
+            background-color: rgb(73, 72, 72);
+        }
+        img{
+            height: 20px;
+            width: 20px;
+        }
+        #ans{
+            display: inline-block;
+            font-size: 40px;
+            margin-left: 140px;
+            margin-top: 10px;
+        }
+        #tsym{
+            height: 90%;
+            width: 80%;
+            position: absolute;
+            top: 15px;
+            left: -50px;
+            opacity: 0.25; 
+        }
+        .symbol{
+          height: 30px;
+          width: 50px;
+          /* position: absolute; */
+          left: 180px;
+          top: 124px;
+        }
+    </style>
+</head>
+
+<body id="bdy">
+    <div class="container" id="con1">
+        <div class="inner-container">
+            <form action="" method="post"  onsubmit="return convert()">
+            <p class="title">Temperature</p>
+            <p class="text">Degree</p>
+            <input type="number" step="0.01" id="temp1" required class="temp" autocomplete="off" name="Temeperature">
+            <select name="" id="sel" required onchange="chgclr()">
+                <option value="ce">*C</option>
+                <option value="fe">*F</option>
+                <option value="ke">*K</option>
+            </select> 
+            <p class="text">Convert In</p>
+            <select name="" id="con" required>
+                <option value="cel">Celsius</option>
+                <option value="fer">Fahrenheit</option>
+                <option value="kel">Kelvin</option>
+            </select>
+            <br>
+            <input id="convert_btn" type="submit"  value="Convert" >
+        </form>
+        </div>
+        <div class="disp-contain">
+            <p  id="ans">0.0</p>
+            <img name="sym" class="symbol" id="sym" src="cel.png" alt="">
+            <img id="tsym" src="tmp_symbol.png" alt="">
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function chgclr(){
+        // var con = document.getElementsByClassName("container");
+        if(sel.value == "ke"){
+            bdy.style.backgroundColor = "rgb(182 138 138 / 49%)";
+            con1.style.backgroundColor = "rgb(252 250 250 / 88%)";
+        }
+        else if(sel.value == "fe"){
+            bdy.style.backgroundColor = "rgb(255, 141, 141)";
+            con1.style.backgroundColor = "#fff4f2";
+        }
+        else {
+            bdy.style.backgroundColor = "lightblue";
+            con1.style.backgroundColor = "aliceblue";
+        }
+
+    }
+    var ans = document.getElementById("ans");
+    var i1 = document.getElementById("sym");
+    function convert(){
+     var num1 = document.getElementById("temp1");
+     var num = parseFloat(num1.value);
+     if(isNaN(num)){
+        alert("Enter Only Number");
+     }
+     else{
+     var unit = document.getElementById("sel");
+     var convertto = document.getElementById("con");
+     if(unit.value == "ce" && convertto.value == "fer"){
+        num = (num * 9/5) + 32;
+        i1.src = "fer.png";
+        ans.innerHTML = num;
+     }   
+     else if(unit.value == "ce" && convertto.value == "kel"){
+        num = num + 273;
+        i1.src = "kel.png";
+        ans.innerHTML = num;
+     }   
+     else if(unit.value == "fe" && convertto.value == "cel"){
+        num = ((num - 32) * 5) / 9;
+        i1.src = "cel.png";
+        var num = num.toFixed(1);
+        ans.innerHTML = num;
+     }   
+     else if(unit.value == "fe" && convertto.value == "kel"){
+        num = ((num - 32) * (5 / 9)) + 273.15;
+        i1.src = "kel.png";
+        var num = num.toFixed(1);
+        ans.innerHTML = num;
+     }   
+     else if(unit.value == "ke" && convertto.value == "cel"){
+        num = num - 273.15;
+        i1.src = "cel.png";
+        var num = num.toFixed(1);
+        ans.innerHTML = num;
+     }  
+     else if(unit.value == "ke" && convertto.value == "fer"){
+        num = (num - 273.15) * 9/5 + 32;
+        i1.src = "fer.png";
+        var num = num.toFixed(1);
+        ans.innerHTML = num;
+     }    
+     event.preventDefault();
+    }
+}
+</script>
